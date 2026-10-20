@@ -80,3 +80,50 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
+// v16 newsletter / interest form (modal). Endpoint empty -> prefilled mailto fallback.
+(function(){
+  var dlg=document.getElementById('nl');if(!dlg)return;
+  var H=document.documentElement,f=dlg.querySelector('form'),opener=null;
+  var ep=(f.getAttribute('data-endpoint')||'').trim();
+  function L(){return H.dataset.lang==='en'?'en':'fr'}
+  function opts(){[].forEach.call(f.querySelectorAll('option[data-fr]'),function(o){o.textContent=o.dataset[L()]})}
+  opts();new MutationObserver(opts).observe(H,{attributes:true,attributeFilter:['data-lang']});
+  function msg(k){[].forEach.call(f.querySelectorAll('.nl-msg [data-k]'),function(p){p.hidden=p.dataset.k!==k})}
+  function err(id,on){var e=document.getElementById('nl-err-'+id),i=document.getElementById('nl-'+id);e.hidden=!on;if(on)i.setAttribute('aria-invalid','true');else i.removeAttribute('aria-invalid')}
+  function open(b){opener=b||null;msg('');err('email',false);err('consent',false);
+    if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}document.body.style.overflow='hidden';
+    setTimeout(function(){f.elements.name.focus()},30)}
+  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}}
+  dlg.addEventListener('close',function(){document.body.style.overflow='';if(opener)opener.focus()});
+  [].forEach.call(document.querySelectorAll('.nl-open'),function(b){b.addEventListener('click',function(){open(b)})});
+  dlg.querySelector('.nl-x').addEventListener('click',close);
+  dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dlg.hasAttribute('open')&&!dlg.showModal)close()});
+  var RE=/^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[A-Za-z]{2,}$/;
+  f.elements.email.addEventListener('input',function(){if(RE.test(this.value.trim()))err('email',false)});
+  f.elements.consent.addEventListener('change',function(){if(this.checked)err('consent',false)});
+  window.gcNlMailto=function(d){
+    var sub=(d.lang==='en'?'Sign-up / news':'Inscription / actualités')+' — Génie Culturel';
+    var body=(d.lang==='en'?'Name':'Nom')+': '+d.name+'\n'+(d.lang==='en'?'Topic':'Sujet')+': '+d.topic+'\nE-mail: '+d.email+'\n'+
+      (d.lang==='en'?'Consent (FADP/GDPR): yes, data used only to contact me about Génie Culturel.':'Consentement (nLPD/RGPD) : oui, données utilisées uniquement pour me recontacter au sujet de Génie Culturel.')+'\n'+
+      (d.lang==='en'?'Language':'Langue')+': '+d.lang+'\n';
+    return 'mailto:info@genieculturel.ch?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);
+  };
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=f.elements.email.value.trim(),okE=RE.test(email),okC=f.elements.consent.checked;
+    err('email',!okE);err('consent',!okC);
+    if(!okE){f.elements.email.focus();return}
+    if(!okC){f.elements.consent.focus();return}
+    if(f.elements._gotcha.value){msg(ep?'ok':'mail');f.reset();return}  // honeypot: bots get a fake success
+    var sel=f.elements.topic,d={name:f.elements.name.value.trim(),email:email,topic:sel.value||'—',
+      consent:true,lang:L(),page:location.href.split('#')[0].split('?')[0],submitted_at:new Date().toISOString()};
+    if(!ep){window.location.href=window.gcNlMailto(d);msg('mail');return}
+    var btn=f.querySelector('.nl-send');btn.disabled=true;msg('busy');
+    var gs=/script\.google\.com|\/exec$/.test(ep);  // Google Apps Script: simple request (no CORS preflight)
+    fetch(ep,{method:'POST',headers:{'Content-Type':gs?'text/plain;charset=utf-8':'application/json','Accept':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){if(!r.ok)throw new Error(r.status);msg('ok');f.reset();opts()})
+      .catch(function(){msg('err')})
+      .then(function(){btn.disabled=false});
+  });
+})();

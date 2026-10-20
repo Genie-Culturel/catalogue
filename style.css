@@ -328,3 +328,28 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 @media(min-width:700px){.cat-sheet-aw .aw{grid-template-columns:1fr 1fr}}
 #distinctions .awards{border-top:0}
 @media(max-width:600px){.tabbar{flex-wrap:wrap;gap:6px}.tabbar a{padding:8px 13px;font-size:14px}}
+/* v16 newsletter modal */
+.contact .nl-open{cursor:pointer;font:inherit;font-weight:600;color:#fff}
+dialog.nl{margin:auto;border:0;padding:0;background:#0d0d0d;color:#fff;border-radius:20px;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;box-shadow:0 30px 80px #000c}
+dialog.nl::backdrop{background:#000b;backdrop-filter:blur(4px)}
+.nl-f{position:relative;display:grid;gap:6px;padding:28px 24px 22px}
+.nl-f h2{font-size:clamp(26px,5vw,34px);line-height:1.05;margin:0 36px 4px 0}
+.nl-f h2 em{color:var(--red);font-style:normal}
+.nl-intro{color:#ccc;font-size:15px;margin-bottom:8px}
+.nl-f label{font-size:14px;font-weight:600;margin-top:8px}
+.nl-f input[type=text],.nl-f input[type=email],.nl-f select{font:inherit;font-size:16px;color:#fff;background:#000;border:1px solid #333;border-radius:12px;padding:12px 14px;width:100%}
+.nl-f select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#aaa 50%),linear-gradient(135deg,#aaa 50%,transparent 50%);background-position:calc(100% - 20px) 52%,calc(100% - 14px) 52%;background-size:6px 6px;background-repeat:no-repeat;padding-right:36px}
+.nl-f input:focus,.nl-f select:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red)}
+.nl-f [aria-invalid=true]{border-color:var(--red)}
+.nl-c{display:flex;gap:10px;align-items:flex-start;margin-top:12px}
+.nl-c input{width:20px;height:20px;flex:0 0 20px;margin-top:2px;accent-color:var(--red)}
+.nl-c label{font-weight:400;font-size:13px;color:#ccc;margin:0;line-height:1.45}
+.nl-c a,.nl-msg a{color:#fff}
+.nl-err{color:#ff6b6b;font-size:13px;margin:2px 0 0}
+.nl-send{margin-top:14px;border:0;cursor:pointer;font:inherit;font-weight:600;justify-self:start}
+.nl-send:disabled{opacity:.6;cursor:wait}
+.nl-msg p{font-size:14px;margin-top:10px;color:#fff;background:#1a1a1a;border-left:3px solid var(--red);padding:10px 12px;border-radius:8px}
+.nl-req{font-size:12px;color:#888;margin-top:8px}
+.nl-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid #333;background:none;color:#fff;font-size:24px;line-height:1;cursor:pointer}
+.nl-x:hover{border-color:var(--red)}
+.nl-hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
