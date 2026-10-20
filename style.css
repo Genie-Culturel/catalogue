@@ -187,3 +187,13 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 .srcs a:hover{text-decoration:underline}
 .pcard .tags{margin-top:auto}
 .emma .pv img{object-position:50% 0%}
+
+/* v4 auto-scrolling carousel */
+.gcar{position:relative;margin:8px 0}
+.gallery{scroll-snap-type:none;scrollbar-width:none;-ms-overflow-style:none;margin:0;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%)}
+.gallery::-webkit-scrollbar{display:none}
+.gallery .g{scroll-snap-align:none}
+.gc-b{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.6);color:#fff;font-size:24px;line-height:1;cursor:pointer;z-index:2;opacity:0;transition:opacity .25s;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.gc-p{left:6px}.gc-n{right:6px}
+.gcar:hover .gc-b,.gc-b:focus-visible{opacity:1}
+@media(hover:none){.gc-b{display:none}}
