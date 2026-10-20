@@ -58,3 +58,25 @@
   var x0=null;lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
   lb.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)show(idx+(dx<0?1:-1));x0=null});
 })();
+// v10 tabs: Catalogue / Chez vous / Portfolio (hash-routed, deep-linkable)
+(function(){
+  var panels=[].slice.call(document.querySelectorAll('.tabpanel'));if(!panels.length)return;
+  var tabs=[].slice.call(document.querySelectorAll('[data-tab]'));
+  var anchor=document.getElementById('tabs-anchor');
+  function show(id){
+    panels.forEach(function(p){p.hidden=(p.id!==id)});
+    tabs.forEach(function(t){var on=t.dataset.tab===id;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
+    try{window.dispatchEvent(new Event('resize'))}catch(e){}
+  }
+  function toTabs(){var y=anchor.getBoundingClientRect().top+window.pageYOffset-(document.querySelector('.top')||{offsetHeight:0}).offsetHeight;window.scrollTo(0,Math.max(0,y))}
+  function route(initial){
+    var h=decodeURIComponent(location.hash.slice(1));
+    var p=panels.filter(function(x){return x.id===h})[0];
+    if(p){show(h);if(initial)window.scrollTo(0,0);else toTabs();return}
+    var el=h&&document.getElementById(h),pp=el&&el.closest('.tabpanel');
+    if(pp){show(pp.id);requestAnimationFrame(function(){el.scrollIntoView()});return}
+    if(initial)show('catalogue');
+  }
+  window.addEventListener('hashchange',function(){route(false)});
+  route(true);
+})();

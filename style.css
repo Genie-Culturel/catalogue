@@ -265,3 +265,38 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 .cv-eras h3{font-size:20px;margin:6px 0 8px}
 .cv-eras p{color:#ccc;font-size:15px}
 .steps strong{color:#fff}
+/* v10 tabs */
+.tabpanel[hidden]{display:none!important}
+#tabs-anchor{height:64px}
+.tabbar{position:sticky;top:60px;z-index:40;display:flex;justify-content:center;gap:6px;padding:10px 12px;background:#000d;backdrop-filter:blur(8px);border-bottom:1px solid #1d1d1d}
+.tabbar a{flex:0 1 auto;text-align:center;text-decoration:none;font-weight:600;font-size:clamp(14px,3.6vw,17px);padding:10px clamp(12px,3vw,26px);border-radius:99px;color:#ccc;border:1px solid #2a2a2a;white-space:nowrap}
+.tabbar a:hover{color:#fff;border-color:#555}
+.tabbar a.on{background:var(--red);border-color:var(--red);color:#fff}
+.top nav a.on{color:var(--red);opacity:1}
+/* catalogue */
+.catalogue{padding:48px 0 30px}
+.cat-sheet{display:grid;gap:26px;padding:44px 0;border-top:1px solid #1d1d1d;scroll-margin-top:130px}
+.cat-sheet:first-of-type{border-top:0}
+@media(min-width:900px){.cat-sheet{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:52px;align-items:start}}
+.cat-n{color:#888;font-size:13px;letter-spacing:.1em}
+.cat-txt h3{font-size:clamp(32px,4vw,48px);line-height:1;margin:8px 0 10px;letter-spacing:-.02em}
+.cat-sub{color:var(--red);font-weight:600;font-size:clamp(19px,2vw,24px);margin-bottom:16px;line-height:1.2}
+.cat-txt .exp{margin-bottom:10px}
+.cat-label{color:var(--red);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:20px 0 6px}
+.cat-offer{font-size:clamp(22px,2.4vw,28px);font-weight:700;margin-bottom:6px}
+.cat-line{color:#ddd;font-size:15px;margin:2px 0}
+.ptab{width:100%;border-collapse:collapse;margin:14px 0 8px;font-size:15px}
+.ptab td{padding:8px 0;border-bottom:1px solid #262626}
+.ptab td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px}
+.ptab tr.tot td{font-weight:700;color:#fff;border-bottom:1px solid #555;text-transform:uppercase;font-size:14px;letter-spacing:.03em}
+.cat-vis figure{margin:0}
+.cat-vis .g{height:auto;width:100%;display:block;border-radius:14px;overflow:hidden}
+.cat-vis .g img{width:100%;height:auto;display:block}
+.cat-vis figcaption{font-size:12px;color:#999;margin-top:6px}
+.cat-sm{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.cat-sm .g img{aspect-ratio:4/3;object-fit:cover}
+.cat-sm2 .g img{aspect-ratio:auto;max-height:520px;object-fit:contain;background:#111}
+.cat-prix{display:grid;gap:14px;margin:10px 0}
+.cat-prix-i b{color:var(--red);font-size:14px}
+.cat-prix-i h4{font-size:19px;margin:2px 0}
+.cat-prix-i p{color:#ccc;font-size:15px}
