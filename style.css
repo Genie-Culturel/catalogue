@@ -253,3 +253,15 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 /* v9 barryland in-headset clip */
 .ingame{margin-top:22px}
 .ingame .cap b{color:#fff;font-weight:600}
+/* v10 chrono zoom clip */
+.czoom .vid{border-radius:16px;overflow:hidden}
+.czoom .cap b{color:#fff;font-weight:600}
+.cf-grid{display:grid;gap:24px;align-items:center}
+@media(min-width:900px){.cf-grid{grid-template-columns:1fr 1.15fr;gap:40px}}
+.cv-eras{display:grid;gap:18px;margin:28px 0 10px}
+@media(min-width:800px){.cv-eras{grid-template-columns:repeat(3,1fr)}.cv-eras.cv-4{grid-template-columns:repeat(4,1fr)}}
+.cv-eras>div{border:1px solid #2a2a2a;border-radius:16px;padding:20px}
+.cv-eras b{color:var(--red);font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.cv-eras h3{font-size:20px;margin:6px 0 8px}
+.cv-eras p{color:#ccc;font-size:15px}
+.steps strong{color:#fff}
