@@ -117,3 +117,26 @@ footer img{height:26px;width:auto}
 @media(max-width:600px){.lb-p,.lb-n{bottom:20px;top:auto}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .vrc-brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:14px;margin-bottom:20px}.vrc-brand .vrc-logo{height:40px;margin:0}.vrc-brand b{color:#1E42FF}
+/* studio + press (v2) */
+.studio{background:var(--bg2);border-top:1px solid #222}
+.press-s{padding:56px 0;border-top:1px solid #222}
+.emma{display:grid;gap:8px;text-decoration:none;border:1px solid var(--red);border-radius:18px;padding:22px;margin:4px 0 18px;background:linear-gradient(135deg,#f801001f,#0000 60%);transition:.2s}
+.emma:hover{transform:translateY(-2px);box-shadow:0 8px 30px #f8010033}
+.emma b{font-size:clamp(20px,2.6vw,28px);line-height:1.15}
+.emma span{color:#ddd;max-width:75ch}
+.emma .more{color:var(--red);font-weight:600}
+.po{color:var(--red)!important;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.talks{color:var(--mut);font-size:14px;margin-bottom:18px}.talks a{color:#fff}
+.plist{list-style:none;display:grid;gap:0;border-top:1px solid #222}
+.plist a{display:grid;grid-template-columns:1fr;gap:2px;padding:12px 0;border-bottom:1px solid #222;text-decoration:none}
+.plist a:hover .pt{color:var(--red)}
+.pd{color:var(--mut);font-size:13px}.pt{font-weight:500}
+@media(min-width:900px){.plist a{grid-template-columns:220px 110px 1fr;align-items:baseline;gap:16px}}
+.press-s .note a{color:#fff}
+/* mixed-reality clips (v2) */
+.mr{max-width:360px;width:100%;margin:18px auto 0}
+.mr .cap{display:flex;align-items:center;gap:8px}
+.mr-dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);flex:none}
+.prod-media .mr{max-width:320px}
+.cf-grid{display:grid;gap:20px;align-items:center}
+@media(min-width:900px){.cf-grid{grid-template-columns:1fr 340px}.barry .mr{margin:18px 0 0}}
