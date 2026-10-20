@@ -5,11 +5,19 @@
   function setLang(l){H.dataset.lang=l;H.lang=l;try{localStorage.setItem('gc-lang',l)}catch(e){}}
   setLang(lang==='en'?'en':'fr');
   document.querySelectorAll('[data-set]').forEach(function(b){b.onclick=function(){setLang(b.dataset.set)}});
-  // lazy autoplay videos only when visible
-  var vids=document.querySelectorAll('video[data-src]');
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;
-    if(e.isIntersecting){if(!v.src){v.src=v.dataset.src}var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}})},{threshold:.25});
-  vids.forEach(function(v){io.observe(v)});
+  // lazy autoplay videos only when visible (iOS-safe)
+  var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
+  function prep(v){v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.setAttribute('autoplay','');}
+  function tryPlay(v){prep(v);if(!v.getAttribute('src')){v.src=v.dataset.src;v.load();}
+    var p=v.play();if(p&&p.then){p.then(function(){v.parentNode.classList.remove('vtap')}).catch(function(){v.parentNode.classList.add('vtap')})}}
+  vids.forEach(function(v){prep(v);v.addEventListener('playing',function(){v.parentNode.classList.remove('vtap')});
+    v.addEventListener('click',function(){if(v.paused){tryPlay(v)}});});
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;v._vis=e.isIntersecting;
+    if(e.isIntersecting){tryPlay(v)}else if(v.getAttribute('src')){v.pause()}})},{threshold:.2});
+    vids.forEach(function(v){io.observe(v)});}else{vids.forEach(tryPlay)}
+  // first touch anywhere unlocks playback (iOS low power mode / blocked autoplay)
+  function unlock(){vids.forEach(function(v){if(v._vis&&v.paused)tryPlay(v)})}
+  ['touchend','click'].forEach(function(t){document.addEventListener(t,unlock,{passive:true})});
   // youtube click-to-load
   document.querySelectorAll('.yt').forEach(function(b){b.onclick=function(){
     b.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';}});

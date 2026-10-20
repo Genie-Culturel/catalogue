@@ -246,3 +246,7 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 .cv-split h2{font-size:clamp(32px,3.6vw,50px)}
 @media(min-width:900px){.cv-hero-g{grid-template-columns:1fr 1.25fr}}
 .cv-hero h1 span{color:#fff}
+
+/* iOS: tap-to-play fallback when autoplay is blocked */
+.vtap{position:relative}
+.vtap::after{content:"";position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5v14l11-7z'/%3E%3C/svg%3E") center/32px no-repeat;pointer-events:none}
