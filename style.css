@@ -363,3 +363,18 @@ dialog.nl::backdrop{background:#000b;backdrop-filter:blur(4px)}
 .nl-f textarea:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red)}
 .nl-f ::placeholder{color:#777}
 .nl-f label small{font-weight:400;color:#999}
+/* v18 Sender embed in the « Restons en contact » modal */
+dialog.nl-sender{width:min(640px,calc(100vw - 20px));background:#fff;color:#111}
+dialog.nl-sender .nl-f{display:block;padding:52px 14px 14px}
+dialog.nl-sender .nl-x{color:#111;border-color:#ccc;background:#fff;z-index:2}
+.nl-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.nl-sender-body{min-height:200px}
+.nl-loading{color:#666;font-size:14px;text-align:center;padding:40px 0}
+.nl-iframe{display:block;width:100%;height:min(1100px,calc(100dvh - 110px));border:0}
+dialog.nl-sender{width:min(480px,calc(100vw - 20px));background:#0d0d0d;color:#fff}
+dialog.nl-sender .nl-f{padding:56px 10px 12px}
+dialog.nl-sender .nl-x{color:#fff;border-color:#444;background:#0d0d0d}
+.nl-sender .sender-form-field{text-align:center!important}
+.nl-iframe{height:940px}
+@media(max-width:500px){.nl-iframe{height:1000px}}
+.nl-alt{font-size:12px;color:#999;text-align:center;margin-top:6px}.nl-alt a{color:#fff}

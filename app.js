@@ -80,52 +80,35 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
-// v17 « Restons en contact » prospect form (modal). Endpoint empty -> prefilled mailto fallback.
+// v18 « Restons en contact » modal: Sender embed (form azpMjr), Sender script loaded lazily on first open.
 (function(){
   var dlg=document.getElementById('nl');if(!dlg)return;
-  var H=document.documentElement,f=dlg.querySelector('form'),opener=null;
-  var ep=(f.getAttribute('data-endpoint')||'').trim();
-  function L(){return H.dataset.lang==='en'?'en':'fr'}
-  function opts(){[].forEach.call(f.querySelectorAll('option[data-fr]'),function(o){o.textContent=o.dataset[L()]});[].forEach.call(f.querySelectorAll('[data-ph-fr]'),function(i){i.placeholder=i.getAttribute('data-ph-'+L())})}
-  opts();new MutationObserver(opts).observe(H,{attributes:true,attributeFilter:['data-lang']});
-  function msg(k){[].forEach.call(f.querySelectorAll('.nl-msg [data-k]'),function(p){p.hidden=p.dataset.k!==k})}
-  function err(id,on){var e=document.getElementById('nl-err-'+id),i=document.getElementById('nl-'+id);e.hidden=!on;if(on)i.setAttribute('aria-invalid','true');else i.removeAttribute('aria-invalid')}
-  function open(b){opener=b||null;msg('');err('email',false);err('consent',false);
+  var opener=null,loaded=false,box=dlg.querySelector('.sender-form-field'),body=dlg.querySelector('.nl-sender-body'),
+      loading=dlg.querySelector('.nl-loading');
+  function rendered(){return !!box.querySelector('input,select,textarea,iframe')}
+  // Relabel Sender's "Select item" placeholder (embed mode: the form renders in a same-origin iframe; cross-origin iframe mode: skipped)
+  function roots(){var r=[box];[].forEach.call(box.querySelectorAll('iframe'),function(f){try{if(f.contentDocument&&f.contentDocument.body)r.push(f.contentDocument.body)}catch(e){}});return r}
+  function relabel(){var lab=document.documentElement.dataset.lang==='en'?'Choose a topic':'Choisir un sujet';
+    roots().forEach(function(root){[].forEach.call(root.querySelectorAll('option'),function(o){if(/^\s*select item\s*$/i.test(o.textContent)||o.dataset.gcPh){o.dataset.gcPh=1;if(o.textContent!==lab)o.textContent=lab}})})}
+  var watched=[];
+  function watch(){roots().forEach(function(root){if(watched.indexOf(root)<0){watched.push(root);new MutationObserver(relabel).observe(root,{childList:true,subtree:true})}});relabel()}
+  new MutationObserver(function(){if(rendered()&&loading)loading.hidden=true;watch();
+    [].forEach.call(box.querySelectorAll('iframe'),function(f){if(!f._gcw){f._gcw=1;f.addEventListener('load',watch)}})}).observe(box,{childList:true,subtree:true});
+  new MutationObserver(relabel).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
+  function iframe(){if(rendered())return;
+    var f=document.createElement('iframe');f.className='nl-iframe';f.src='https://stats.sender.net/forms/azpMjr/view';
+    f.title='Restons en contact — Génie Culturel';f.addEventListener('load',function(){if(loading)loading.hidden=true});box.appendChild(f)}
+  function load(){if(loaded)return;loaded=true;
+    var tpl=document.getElementById('sender-loader');
+    if(dlg.dataset.mode==='embed'&&tpl){document.body.appendChild(document.importNode(tpl.content,true));setTimeout(iframe,8000)}
+    else{iframe()}}
+  function open(b){opener=b||null;load();
     if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}document.body.style.overflow='hidden';
-    setTimeout(function(){f.elements.name.focus()},30)}
-  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}}
+    setTimeout(function(){dlg.querySelector('.nl-x').focus()},30)}
+  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}document.body.style.overflow=''}
   dlg.addEventListener('close',function(){document.body.style.overflow='';if(opener)opener.focus()});
   [].forEach.call(document.querySelectorAll('.nl-open'),function(b){b.addEventListener('click',function(){open(b)})});
   dlg.querySelector('.nl-x').addEventListener('click',close);
   dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dlg.hasAttribute('open')&&!dlg.showModal)close()});
-  var RE=/^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[A-Za-z]{2,}$/;
-  f.elements.email.addEventListener('input',function(){if(RE.test(this.value.trim()))err('email',false)});
-  f.elements.consent.addEventListener('change',function(){if(this.checked)err('consent',false)});
-  window.gcNlMailto=function(d){
-    var en=d.lang==='en';
-    var sub=(en?'Let’s stay in touch':'Restons en contact')+' — Génie Culturel';
-    var body=(en?'Name':'Nom')+': '+d.name+'\n'+'Organisation: '+d.organisation+'\n'+'E-mail: '+d.email+'\n'+
-      (en?'Topic':'Sujet')+': '+d.topic+'\n'+(en?'Other useful information':'Autre information utile')+': '+d.message+'\n\n'+
-      (en?'Consent: yes, Génie Culturel may send me documentation and contact me again.':'Consentement : oui, Génie Culturel peut m’envoyer de la documentation et me recontacter.')+'\n'+
-      (en?'Language':'Langue')+': '+d.lang+' · '+(en?'Page':'Page')+': '+d.page+'\n';
-    return 'mailto:info@genieculturel.ch?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);
-  };
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var email=f.elements.email.value.trim(),okE=RE.test(email),okC=f.elements.consent.checked;
-    err('email',!okE);err('consent',!okC);
-    if(!okE){f.elements.email.focus();return}
-    if(!okC){f.elements.consent.focus();return}
-    if(f.elements._gotcha.value){msg(ep?'ok':'mail');f.reset();return}  // honeypot: bots get a fake success
-    var sel=f.elements.topic,d={name:f.elements.name.value.trim(),organisation:f.elements.organisation.value.trim(),email:email,topic:sel.value||'—',message:f.elements.message.value.trim(),
-      consent:true,lang:L(),page:location.href.split('#')[0].split('?')[0],submitted_at:new Date().toISOString()};
-    if(!ep){window.location.href=window.gcNlMailto(d);msg('mail');return}
-    var btn=f.querySelector('.nl-send');btn.disabled=true;msg('busy');
-    var gs=/script\.google\.com|\/exec$/.test(ep);  // Google Apps Script: simple request (no CORS preflight)
-    fetch(ep,{method:'POST',headers:{'Content-Type':gs?'text/plain;charset=utf-8':'application/json','Accept':'application/json'},body:JSON.stringify(d)})
-      .then(function(r){if(!r.ok)throw new Error(r.status);msg('ok');f.reset();opts()})
-      .catch(function(){msg('err')})
-      .then(function(){btn.disabled=false});
-  });
 })();
