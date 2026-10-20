@@ -178,3 +178,11 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 .emma b{font-size:clamp(22px,2.8vw,32px)}
 .aw b{font-size:clamp(28px,3vw,36px)}.aw span{font-size:17px}
 @media(max-width:600px){h2 br{display:none}}
+/* v3: merged press cards with multiple sources */
+.pcard .pv,.emma .pv{display:block}
+.pt-l{text-decoration:none}.pt-l:hover b{color:var(--red)}
+.emma{text-decoration:none}
+.srcs{display:flex;flex-direction:column;gap:4px;padding-top:8px;border-top:1px solid #222;margin-top:6px}
+.srcs a{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--red);text-decoration:none}
+.srcs a:hover{text-decoration:underline}
+.pcard .tags{margin-top:auto}
