@@ -329,7 +329,7 @@ h2{font-size:clamp(36px,6vw,76px);margin-bottom:22px}
 #distinctions .awards{border-top:0}
 @media(max-width:600px){.tabbar{flex-wrap:wrap;gap:6px}.tabbar a{padding:8px 13px;font-size:14px}}
 /* v16 newsletter modal */
-.contact .nl-open{cursor:pointer;font:inherit;font-weight:600;color:#fff}
+.contact .nl-open{cursor:pointer;font:inherit;font-weight:600}
 dialog.nl{margin:auto;border:0;padding:0;background:#0d0d0d;color:#fff;border-radius:20px;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;box-shadow:0 30px 80px #000c}
 dialog.nl::backdrop{background:#000b;backdrop-filter:blur(4px)}
 .nl-f{position:relative;display:grid;gap:6px;padding:28px 24px 22px}
@@ -353,3 +353,13 @@ dialog.nl::backdrop{background:#000b;backdrop-filter:blur(4px)}
 .nl-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid #333;background:none;color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .nl-x:hover{border-color:var(--red)}
 .nl-hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* v17 « Restons en contact » pill straddling black / red */
+.contact{position:relative}
+.nl-straddle{position:absolute;left:0;right:0;top:0;transform:translateY(-50%);display:flex;justify-content:center;z-index:6;pointer-events:none}
+.nl-pill,.contact .nl-pill{pointer-events:auto;cursor:pointer;font:inherit;font-weight:700;font-size:clamp(16px,1.6vw,19px);letter-spacing:.01em;color:#000;background:#fff;border:2px solid #000;border-radius:99px;padding:15px 30px;box-shadow:0 10px 30px #0009,0 2px 6px #0006;transition:transform .2s,box-shadow .2s}
+.nl-pill:hover{transform:translateY(-2px);box-shadow:0 14px 36px #000b,0 2px 8px #0007}
+.nl-pill:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.nl-f textarea{font:inherit;font-size:16px;color:#fff;background:#000;border:1px solid #333;border-radius:12px;padding:12px 14px;width:100%;resize:vertical;min-height:84px}
+.nl-f textarea:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red)}
+.nl-f ::placeholder{color:#777}
+.nl-f label small{font-weight:400;color:#999}

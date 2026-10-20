@@ -80,13 +80,13 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
-// v16 newsletter / interest form (modal). Endpoint empty -> prefilled mailto fallback.
+// v17 « Restons en contact » prospect form (modal). Endpoint empty -> prefilled mailto fallback.
 (function(){
   var dlg=document.getElementById('nl');if(!dlg)return;
   var H=document.documentElement,f=dlg.querySelector('form'),opener=null;
   var ep=(f.getAttribute('data-endpoint')||'').trim();
   function L(){return H.dataset.lang==='en'?'en':'fr'}
-  function opts(){[].forEach.call(f.querySelectorAll('option[data-fr]'),function(o){o.textContent=o.dataset[L()]})}
+  function opts(){[].forEach.call(f.querySelectorAll('option[data-fr]'),function(o){o.textContent=o.dataset[L()]});[].forEach.call(f.querySelectorAll('[data-ph-fr]'),function(i){i.placeholder=i.getAttribute('data-ph-'+L())})}
   opts();new MutationObserver(opts).observe(H,{attributes:true,attributeFilter:['data-lang']});
   function msg(k){[].forEach.call(f.querySelectorAll('.nl-msg [data-k]'),function(p){p.hidden=p.dataset.k!==k})}
   function err(id,on){var e=document.getElementById('nl-err-'+id),i=document.getElementById('nl-'+id);e.hidden=!on;if(on)i.setAttribute('aria-invalid','true');else i.removeAttribute('aria-invalid')}
@@ -103,10 +103,12 @@
   f.elements.email.addEventListener('input',function(){if(RE.test(this.value.trim()))err('email',false)});
   f.elements.consent.addEventListener('change',function(){if(this.checked)err('consent',false)});
   window.gcNlMailto=function(d){
-    var sub=(d.lang==='en'?'Sign-up / news':'Inscription / actualités')+' — Génie Culturel';
-    var body=(d.lang==='en'?'Name':'Nom')+': '+d.name+'\n'+(d.lang==='en'?'Topic':'Sujet')+': '+d.topic+'\nE-mail: '+d.email+'\n'+
-      (d.lang==='en'?'Consent (FADP/GDPR): yes, data used only to contact me about Génie Culturel.':'Consentement (nLPD/RGPD) : oui, données utilisées uniquement pour me recontacter au sujet de Génie Culturel.')+'\n'+
-      (d.lang==='en'?'Language':'Langue')+': '+d.lang+'\n';
+    var en=d.lang==='en';
+    var sub=(en?'Let’s stay in touch':'Restons en contact')+' — Génie Culturel';
+    var body=(en?'Name':'Nom')+': '+d.name+'\n'+'Organisation: '+d.organisation+'\n'+'E-mail: '+d.email+'\n'+
+      (en?'Topic':'Sujet')+': '+d.topic+'\n'+(en?'Other useful information':'Autre information utile')+': '+d.message+'\n\n'+
+      (en?'Consent: yes, Génie Culturel may send me documentation and contact me again.':'Consentement : oui, Génie Culturel peut m’envoyer de la documentation et me recontacter.')+'\n'+
+      (en?'Language':'Langue')+': '+d.lang+' · '+(en?'Page':'Page')+': '+d.page+'\n';
     return 'mailto:info@genieculturel.ch?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);
   };
   f.addEventListener('submit',function(e){
@@ -116,7 +118,7 @@
     if(!okE){f.elements.email.focus();return}
     if(!okC){f.elements.consent.focus();return}
     if(f.elements._gotcha.value){msg(ep?'ok':'mail');f.reset();return}  // honeypot: bots get a fake success
-    var sel=f.elements.topic,d={name:f.elements.name.value.trim(),email:email,topic:sel.value||'—',
+    var sel=f.elements.topic,d={name:f.elements.name.value.trim(),organisation:f.elements.organisation.value.trim(),email:email,topic:sel.value||'—',message:f.elements.message.value.trim(),
       consent:true,lang:L(),page:location.href.split('#')[0].split('?')[0],submitted_at:new Date().toISOString()};
     if(!ep){window.location.href=window.gcNlMailto(d);msg('mail');return}
     var btn=f.querySelector('.nl-send');btn.disabled=true;msg('busy');

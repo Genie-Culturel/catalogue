@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="512x512" href="assets/img/icon-512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/SpaceGrotesk-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
 <header class="top">
@@ -319,13 +319,13 @@
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
+  <div class="nl-straddle"><button type="button" class="nl-open nl-pill" aria-haspopup="dialog" aria-controls="nl"><span lang="fr">Restons en contact</span><span lang="en">Let’s stay in touch</span></button></div>
   <div class="wrap">
     <h2><span lang="fr">Créons votre prochaine<br><em>expérience XR.</em></span><span lang="en">Let’s create your next<br><em>XR experience.</em></span></h2>
     <p class="exp"><span lang="fr">Musées, sites patrimoniaux, destinations touristiques, écoles : parlons de votre projet.</span><span lang="en">Museums, heritage sites, tourist destinations, schools: let’s talk about your project.</span></p>
     <div class="cta-row">
       <a class="btn" href="mailto:info@genieculturel.ch?subject=KIKK%202026%20%E2%80%94%20G%C3%A9nie%20Culturel">info@genieculturel.ch</a>
       <a class="btn ghost" href="tel:+41766751466">+41 76 675 14 66</a>
-      <button type="button" class="btn ghost nl-open" aria-haspopup="dialog" aria-controls="nl"><span lang="fr">S’inscrire · Recevoir nos actualités</span><span lang="en">Sign up · Get our news</span></button>
     </div>
     <p class="links"><a href="https://www.genieculturel.ch" target="_blank" rel="noopener">genieculturel.ch</a> · <a href="https://virtualrealitycenter.ch" target="_blank" rel="noopener">virtualrealitycenter.ch</a> · <a href="https://www.youtube.com/@genieculturelgamegenerator827" target="_blank" rel="noopener">YouTube</a></p>
   </div>
@@ -333,23 +333,27 @@
 <dialog class="nl" id="nl" aria-labelledby="nl-title">
   <form class="nl-f" novalidate data-endpoint="">
     <button type="button" class="nl-x" aria-label="Fermer / Close">×</button>
-    <h2 id="nl-title"><span lang="fr">Recevoir nos <em>actualités</em></span><span lang="en">Get our <em>news</em></span></h2>
-    <p class="nl-intro"><span lang="fr">Laissez-nous vos coordonnées : nous vous recontactons au sujet de Génie Culturel.</span><span lang="en">Leave us your details and we will get back to you about Génie Culturel.</span></p>
+    <h2 id="nl-title"><span lang="fr">Restons <em>en contact</em></span><span lang="en">Let’s stay <em>in touch</em></span></h2>
+    <p class="nl-intro"><span lang="fr">Laissez-nous vos coordonnées : nous vous enverrons notre documentation et reviendrons vers vous.</span><span lang="en">Leave us your details: we will send you our documentation and get back to you.</span></p>
     <label for="nl-name"><span lang="fr">Nom</span><span lang="en">Name</span></label>
     <input id="nl-name" name="name" type="text" autocomplete="name" maxlength="120">
-    <label for="nl-topic"><span lang="fr">Sujet qui m’intéresse</span><span lang="en">Topic I’m interested in</span></label>
-    <select id="nl-topic" name="topic"><option value="" data-fr="Choisir…" data-en="Choose…">Choisir…</option><option value="Barryland" data-fr="Barryland" data-en="Barryland">Barryland</option><option value="Chronoscope XR" data-fr="Chronoscope XR" data-en="Chronoscope XR">Chronoscope XR</option><option value="ARcheoGame" data-fr="ARcheoGame" data-en="ARcheoGame">ARcheoGame</option><option value="Immersion historique — La Bataille de la Planta" data-fr="Immersion historique — La Bataille de la Planta" data-en="Historical immersion — La Bataille de la Planta">Immersion historique — La Bataille de la Planta</option><option value="SchoolCrafter" data-fr="SchoolCrafter" data-en="SchoolCrafter">SchoolCrafter</option><option value="Autre" data-fr="Autre" data-en="Other">Autre</option></select>
+    <label for="nl-org"><span lang="fr">Organisation</span><span lang="en">Organisation</span> <small><span lang="fr">(facultatif)</span><span lang="en">(optional)</span></small></label>
+    <input id="nl-org" name="organisation" type="text" autocomplete="organization" maxlength="160" placeholder="Musée, commune, école…" data-ph-fr="Musée, commune, école…" data-ph-en="Museum, municipality, school…">
     <label for="nl-email"><span lang="fr">E-mail</span><span lang="en">E-mail</span> <span aria-hidden="true">*</span></label>
     <input id="nl-email" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="nl-err-email" maxlength="200">
     <p class="nl-err" id="nl-err-email" hidden><span lang="fr">Veuillez saisir une adresse e-mail valide.</span><span lang="en">Please enter a valid e-mail address.</span></p>
+    <label for="nl-topic"><span lang="fr">Sujet qui m’intéresse</span><span lang="en">Topic I’m interested in</span></label>
+    <select id="nl-topic" name="topic"><option value="" data-fr="Choisir…" data-en="Choose…">Choisir…</option><option value="Barryland : maquette et immersion" data-fr="Barryland : maquette et immersion" data-en="Barryland: scale model and immersion">Barryland : maquette et immersion</option><option value="ARcheoGame : révèle le passé" data-fr="ARcheoGame : révèle le passé" data-en="ARcheoGame: reveal the past">ARcheoGame : révèle le passé</option><option value="Chronoscope XR : voyage dans le temps sur un site" data-fr="Chronoscope XR : voyage dans le temps sur un site" data-en="Chronoscope XR: time travel on a site">Chronoscope XR : voyage dans le temps sur un site</option><option value="Projet serious game VR" data-fr="Projet serious game VR" data-en="VR serious game project">Projet serious game VR</option><option value="Une expérience sur mesure pour mon lieu" data-fr="Une expérience sur mesure pour mon lieu" data-en="A tailor-made experience for my venue">Une expérience sur mesure pour mon lieu</option><option value="Recevoir la documentation complète" data-fr="Recevoir la documentation complète" data-en="Receive the full documentation">Recevoir la documentation complète</option><option value="Obtenir un devis" data-fr="Obtenir un devis" data-en="Get a quote">Obtenir un devis</option><option value="Organiser une démo" data-fr="Organiser une démo" data-en="Arrange a demo">Organiser une démo</option><option value="Me tenir au courant de vos projets" data-fr="Me tenir au courant de vos projets" data-en="Keep me posted on your projects">Me tenir au courant de vos projets</option><option value="Autre" data-fr="Autre" data-en="Other">Autre</option></select>
+    <label for="nl-msg"><span lang="fr">Autre information utile</span><span lang="en">Other useful information</span> <small><span lang="fr">(facultatif)</span><span lang="en">(optional)</span></small></label>
+    <textarea id="nl-msg" name="message" rows="3" maxlength="1500" placeholder="Précisez votre besoin, vos dates, votre lieu…" data-ph-fr="Précisez votre besoin, vos dates, votre lieu…" data-ph-en="Tell us about your needs, dates, venue…"></textarea>
     <div class="nl-hp" aria-hidden="true"><label for="nl-web">Website</label><input id="nl-web" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
     <div class="nl-c"><input id="nl-consent" name="consent" type="checkbox" required aria-required="true" aria-describedby="nl-err-consent">
-      <label for="nl-consent"><span lang="fr">J’accepte que mes données soient utilisées uniquement pour me recontacter au sujet de Génie Culturel (nLPD / RGPD). Suppression sur simple demande à <a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a>. *</span><span lang="en">I agree that my data will be used only to contact me about Génie Culturel (Swiss FADP / GDPR). Deletion on request at <a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a>. *</span></label></div>
+      <label for="nl-consent"><span lang="fr">J’accepte que Génie Culturel m’envoie de la documentation et me recontacte. Les documents transmis sont confidentiels et non exploitables sans accord. Suppression sur demande : <a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a> *</span><span lang="en">I agree that Génie Culturel may send me documentation and contact me again. The documents provided are confidential and may not be used without permission. Deletion on request: <a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a> *</span></label></div>
     <p class="nl-err" id="nl-err-consent" hidden><span lang="fr">Merci de cocher la case de consentement.</span><span lang="en">Please tick the consent box.</span></p>
     <button type="submit" class="btn nl-send"><span lang="fr">Envoyer</span><span lang="en">Send</span></button>
     <div class="nl-msg" role="status" aria-live="polite">
       <p data-k="mail" hidden><span lang="fr">Votre messagerie s’ouvre avec un message prérempli : il suffit de l’envoyer. Merci !</span><span lang="en">Your e-mail app opens with a prefilled message: just send it. Thank you!</span></p>
-      <p data-k="ok" hidden><span lang="fr">Merci ! Votre inscription est bien enregistrée.</span><span lang="en">Thank you! Your sign-up has been received.</span></p>
+      <p data-k="ok" hidden><span lang="fr">Merci ! Votre demande est bien enregistrée, nous revenons vers vous.</span><span lang="en">Thank you! Your request has been received, we will get back to you.</span></p>
       <p data-k="err" hidden><span lang="fr">L’envoi a échoué. Réessayez ou écrivez-nous à <a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a>.</span><span lang="en">Sending failed. Please try again or write to <a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a>.</span></p>
       <p data-k="busy" hidden><span lang="fr">Envoi…</span><span lang="en">Sending…</span></p>
     </div>
@@ -360,5 +364,5 @@
 <footer><img src="assets/img/logo-gc-white.png" alt="Génie Culturel"><span>Swiss designed by Génie Culturel · Sion, Valais</span></footer>
 
 <div class="lb" hidden><button class="lb-x" aria-label="Close">×</button><button class="lb-p" aria-label="Previous">‹</button><figure><img alt=""><figcaption></figcaption></figure><button class="lb-n" aria-label="Next">›</button></div>
-<script src="app.js?v=20"></script>
+<script src="app.js?v=21"></script>
 </body></html>
