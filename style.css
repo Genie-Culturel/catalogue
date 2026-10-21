@@ -383,3 +383,8 @@ dialog.nl-sender .nl-x{color:#fff;border-color:#444;background:#0d0d0d}
 .soon{margin-top:48px;padding-top:44px;border-top:1px solid #333}
 .soon > .tag{--c:#3FC8FF}
 .soon .prod{border-top:0}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.foot-links a{color:#ddd;text-decoration:none;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.foot-links a:hover{color:var(--red)}
+.foot-links .ig-ico{flex:0 0 auto}
+@media(max-width:600px){footer{flex-direction:column;align-items:flex-start;gap:16px}}
