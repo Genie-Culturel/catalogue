@@ -70,7 +70,7 @@ h1{font-size:clamp(64px,15vw,180px);line-height:.88;letter-spacing:-.04em}
 .chrono h2 em{color:#E2B65A}
 .chrono-head{display:grid;gap:20px;align-items:center;margin-bottom:28px}
 .chrono-logo{width:220px;border-radius:14px}
-@media(min-width:900px){.chrono-head{grid-template-columns:300px 1fr;gap:48px}.chrono-logo{width:300px}}
+@media(min-width:900px){.chrono-head{grid-template-columns:1fr;gap:48px}.chrono-logo{width:300px}}
 .chrono-foot{margin-top:18px}
 /* products */
 .portfolio{background:var(--bg2)}
@@ -378,3 +378,5 @@ dialog.nl-sender .nl-x{color:#fff;border-color:#444;background:#0d0d0d}
 .nl-iframe{height:940px}
 @media(max-width:500px){.nl-iframe{height:1000px}}
 .nl-alt{font-size:12px;color:#999;text-align:center;margin-top:6px}.nl-alt a{color:#fff}
+
+.nova-lead img{width:100%;height:100%;object-fit:cover;display:block}
