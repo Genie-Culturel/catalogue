@@ -97,7 +97,10 @@
   new MutationObserver(relabel).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
   function iframe(){if(rendered())return;
     var f=document.createElement('iframe');f.className='nl-iframe';f.src='https://stats.sender.net/forms/azpMjr/view';
-    f.title='Restons en contact — Génie Culturel';f.addEventListener('load',function(){if(loading)loading.hidden=true});box.appendChild(f)}
+    f.title='Restons en contact — Génie Culturel';var n=0;f.addEventListener('load',function(){if(loading)loading.hidden=true;n++;if(n>1)done()});box.appendChild(f)}
+  // After submit: the hosted form reloads its iframe (2nd load) or posts a message → close and return to the site after 4 s.
+  var doneT=null;function done(){if(doneT||!dlg.hasAttribute('open'))return;doneT=setTimeout(function(){doneT=null;close()},4000)}
+  window.addEventListener('message',function(e){if(/sender\.net$/.test((e.origin||'').replace(/^https?:\/\//,''))&&/success|submit|subscrib/i.test(typeof e.data==='string'?e.data:JSON.stringify(e.data||'')))done()});
   function load(){if(loaded)return;loaded=true;
     var tpl=document.getElementById('sender-loader');
     if(dlg.dataset.mode==='embed'&&tpl){document.body.appendChild(document.importNode(tpl.content,true));setTimeout(iframe,8000)}
@@ -109,6 +112,7 @@
   dlg.addEventListener('close',function(){document.body.style.overflow='';if(opener)opener.focus()});
   [].forEach.call(document.querySelectorAll('.nl-open'),function(b){b.addEventListener('click',function(){open(b)})});
   dlg.querySelector('.nl-x').addEventListener('click',close);
+  var bk=dlg.querySelector('.nl-back');if(bk)bk.addEventListener('click',close);
   dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dlg.hasAttribute('open')&&!dlg.showModal)close()});
 })();
