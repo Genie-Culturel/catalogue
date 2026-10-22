@@ -405,3 +405,5 @@ dialog.nl-sender .nl-x{color:#fff;border-color:#444;background:#0d0d0d}
 /* v38 form: always-visible way back to the site */
 .nl-back-w{position:sticky;bottom:0;text-align:center;padding:10px 0 4px;background:linear-gradient(transparent,#0d0d0d 40%)}
 .nl-back{font:inherit;font-weight:700;font-size:16px;color:#000;background:#fff;border:0;border-radius:99px;padding:13px 26px;cursor:pointer;box-shadow:0 8px 24px #000a}
+.cv-pill{display:inline-block;background:var(--red);color:#fff;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:4px;margin:0 0 14px}
+.gb-key{margin-top:28px}.gb-key .cv-fig img{width:100%}
