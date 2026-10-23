@@ -1,4 +1,4 @@
-// v46 light/dark theme toggle (choice applied in <head> before paint, persisted in localStorage 'gc-theme'; ?theme=light|dark also sets it)
+// v47 light/dark theme toggle (LIGHT is the default; choice applied in <head> before paint, persisted in localStorage 'gc-theme'; ?theme=light|dark also sets it)
 (function(){
   var H=document.documentElement;
   function lab(){var l=H.getAttribute('data-theme')==='light';[].forEach.call(document.querySelectorAll('.theme-t'),function(b){
