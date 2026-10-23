@@ -1,3 +1,50 @@
+// v46 light/dark theme toggle (choice applied in <head> before paint, persisted in localStorage 'gc-theme'; ?theme=light|dark also sets it)
+(function(){
+  var H=document.documentElement;
+  function lab(){var l=H.getAttribute('data-theme')==='light';[].forEach.call(document.querySelectorAll('.theme-t'),function(b){
+    var fr=l?'Passer au thème sombre':'Passer au thème clair',en=l?'Switch to dark theme':'Switch to light theme';
+    var s=H.dataset.lang==='en'?en:fr;b.setAttribute('aria-label',s);b.title=s;b.setAttribute('aria-pressed',l?'true':'false')})}
+  [].forEach.call(document.querySelectorAll('.theme-t'),function(b){b.addEventListener('click',function(){
+    var n=H.getAttribute('data-theme')==='light'?'dark':'light';H.setAttribute('data-theme',n);try{localStorage.setItem('gc-theme',n)}catch(e){}lab()})});
+  new MutationObserver(lab).observe(H,{attributes:true,attributeFilter:['data-lang']});lab();
+})();
+// v46 Mockup access gate (code checked against its SHA-256; unlock remembered in localStorage 'gc-mk')
+(function(){
+  var H=document.documentElement,HASH='0fb6f3b74421092bb15436234b1d835043420249b4300d2323b5a889d7c9a2c8';
+  var home=!H.hasAttribute('data-mk'),pre=home?'':'../',idx=pre+'chez-vous/index.html';
+  function ok(){try{return localStorage.getItem('gc-mk')==='1'}catch(e){return false}}
+  function hex(b){return [].map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2)}).join('')}
+  function sha(s){if(window.crypto&&crypto.subtle&&window.TextEncoder)return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(hex);return Promise.reject()}
+  function T(fr,en){return '<span lang="fr">'+fr+'</span><span lang="en">'+en+'</span>'}
+  var box=null,target=null;
+  function build(locked){
+    box=document.createElement('div');box.className='mk-gate'+(locked?' mk-hard':'');box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','mk-t');
+    box.innerHTML='<form class="mk-card" novalidate>'+(locked?'':'<button type="button" class="mk-x" aria-label="Fermer / Close">×</button>')+
+      '<p class="mk-ic">'+document.querySelector('.mk-link .ic-lock').outerHTML+'</p>'+
+      '<p class="mk-k">Mockup</p><h2 id="mk-t">'+T('Accès réservé','Restricted access')+'</h2>'+
+      '<p class="mk-p">'+T('Entrez votre code pour découvrir nos propositions.','Enter your code to view our proposals.')+'</p>'+
+      '<label class="mk-sr" for="mk-in">Code</label><div class="mk-row"><input id="mk-in" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Code" required>'+
+      '<button type="submit" class="btn mk-go">'+T('Entrer','Enter')+'</button></div>'+
+      '<p class="mk-err" role="alert" hidden>'+T('Code incorrect.','Incorrect code.')+'</p>'+
+      '<p class="mk-foot">'+(locked?'<a href="'+pre+'index.html">'+T('← Retour au site','← Back to the site')+'</a> · ':'')+T('Pas de code ? ','No code? ')+'<a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a></p></form>';
+    document.body.appendChild(box);
+    var f=box.querySelector('form'),inp=box.querySelector('input'),err=box.querySelector('.mk-err');
+    f.addEventListener('submit',function(e){e.preventDefault();var v=(inp.value||'').trim().toLowerCase();if(!v){inp.focus();return}
+      sha(v).then(function(h){if(h===HASH){try{localStorage.setItem('gc-mk','1')}catch(x){}
+          if(target){location.href=target}else{H.classList.remove('mk-locked');close();try{window.dispatchEvent(new Event('resize'))}catch(x){}}}
+        else{err.hidden=false;f.classList.remove('mk-shake');void f.offsetWidth;f.classList.add('mk-shake');inp.select()}},
+        function(){err.hidden=false})});
+    var x=box.querySelector('.mk-x');if(x)x.addEventListener('click',close);
+    if(!locked)box.addEventListener('click',function(e){if(e.target===box)close()});
+  }
+  function open(t,locked){target=t||null;if(!box)build(locked);box.hidden=false;if(!locked)document.body.style.overflow='hidden';setTimeout(function(){box.querySelector('input').focus()},30)}
+  function close(){if(box&&!box.classList.contains('mk-hard')){box.hidden=true;document.body.style.overflow=''}else if(box&&!H.classList.contains('mk-locked')){box.remove();box=null}}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&box&&!box.hidden)close()});
+  [].forEach.call(document.querySelectorAll('.mk-link'),function(a){a.addEventListener('click',function(e){if(ok())return;e.preventDefault();open(a.href,false)})});
+  if(!home&&H.classList.contains('mk-locked'))open(null,true);
+  // old home links (#chez-vous / #cv-list) now lead to the locked Mockup page
+  if(home&&/^#(chez-vous|cv-list)$/.test(location.hash)){if(ok())location.replace(idx);else{history.replaceState(null,'',location.pathname+location.search);open(idx,false)}}
+})();
 (function(){
   var H=document.documentElement;
   var q=new URLSearchParams(location.search).get('lang');

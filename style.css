@@ -407,3 +407,92 @@ dialog.nl-sender .nl-x{color:#fff;border-color:#444;background:#0d0d0d}
 .nl-back{font:inherit;font-weight:700;font-size:16px;color:#000;background:#fff;border:0;border-radius:99px;padding:13px 26px;cursor:pointer;box-shadow:0 8px 24px #000a}
 .cv-pill{display:inline-block;background:var(--red);color:#fff;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:4px;margin:0 0 14px}
 .gb-key{margin-top:28px}.gb-key .cv-fig img{width:100%}
+
+/* v46 header: Contact · theme toggle · Mockup · FR/EN */
+.top .logo{margin-right:auto}
+.top nav,.top .cv-nav{margin-left:0}
+.top .lang{margin-left:0}
+.logo-d{display:none}
+footer .logo-w,footer .logo-d{height:26px;width:auto}
+.theme-t{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:0 0 34px;border-radius:50%;border:1px solid #fff4;background:none;color:inherit;cursor:pointer;padding:0;transition:border-color .2s,color .2s}
+.theme-t:hover{border-color:var(--red);color:var(--red)}
+.theme-t .ic-moon{display:none}
+.mk-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:#bbb;border:1px solid #fff3;border-radius:99px;padding:5px 10px;white-space:nowrap;transition:color .2s,border-color .2s}
+.mk-link:hover{color:var(--red);border-color:var(--red)}
+.mk-link .ic-lock{opacity:.8}
+@media(max-width:899px){.top{gap:8px;padding:10px 14px}.lang button{padding:7px 10px}}
+@media(max-width:480px){.cvpage .cv-nav{display:none!important}}
+@media(max-width:380px){.logo img{height:26px}}
+/* v46 Mockup gate */
+.mk-gate{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:20px;background:#000b;backdrop-filter:blur(6px)}
+.mk-gate[hidden]{display:none}
+.mk-gate.mk-hard{z-index:45;background:var(--bg)}
+.mk-card{position:relative;width:min(420px,100%);background:#0d0d0d;color:#fff;border:1px solid #2a2a2a;border-top:3px solid var(--red);border-radius:20px;padding:30px 26px 22px;box-shadow:0 30px 80px #000a;text-align:left}
+.mk-ic{color:var(--red);margin-bottom:10px}.mk-ic svg{width:26px;height:26px}
+.mk-k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:6px}
+.mk-card h2{font-size:clamp(26px,5vw,34px);margin:0 0 8px}
+.mk-p{color:#ccc;font-size:15px;margin-bottom:16px}
+.mk-row{display:flex;gap:8px}
+.mk-row input{flex:1;min-width:0;font:inherit;font-size:16px;color:#fff;background:#000;border:1px solid #333;border-radius:99px;padding:12px 16px}
+.mk-row input:focus{outline:2px solid var(--red);outline-offset:1px;border-color:var(--red)}
+.mk-go{border:0;cursor:pointer;font:inherit;font-weight:600;padding:12px 20px}
+.mk-err{color:#ff6b6b;font-size:13px;margin-top:8px}
+.mk-foot{font-size:12px;color:#999;margin-top:16px}.mk-foot a{color:inherit}
+.mk-x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:1px solid #333;background:none;color:inherit;font-size:22px;line-height:1;cursor:pointer}
+.mk-x:hover{border-color:var(--red)}
+.mk-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.mk-shake{animation:mkshake .35s}
+@keyframes mkshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* v46 light theme */
+html[data-theme=light]{--bg:#fff;--bg2:#f6f6f4;--fg:#111;--mut:#666;color-scheme:light}
+html[data-theme=light] .logo-w{display:none}html[data-theme=light] .logo-d{display:block}
+html[data-theme=light] .theme-t .ic-sun{display:none}html[data-theme=light] .theme-t .ic-moon{display:block}
+html[data-theme=light] .top{background:#fffffff0;border-bottom:1px solid #e6e6e6}
+html[data-theme=light] .theme-t{border-color:#0002}
+html[data-theme=light] .mk-link{color:#555;border-color:#0002}
+html[data-theme=light] .lang{border-color:#0003}
+html[data-theme=light] .lang button{color:#111}
+html[data-theme=light] [data-lang] .lang button[data-set]{color:#111}
+html[data-theme=light][data-lang=fr] [data-set=fr],html[data-theme=light][data-lang=en] [data-set=en]{color:#fff}
+html[data-theme=light] .exp,html[data-theme=light] .steps li,html[data-theme=light] .cat-line,html[data-theme=light] .pr-start span,html[data-theme=light] .cat-part p,html[data-theme=light] .emma span{color:#333}
+html[data-theme=light] .biz li,html[data-theme=light] .cv-fig-q p{color:#222}
+html[data-theme=light] .steps strong,html[data-theme=light] .pr-start strong,html[data-theme=light] .cat-play,html[data-theme=light] .cv-hero h1,html[data-theme=light] .cv-hero h1 span,html[data-theme=light] .ingame .cap b,html[data-theme=light] .czoom .cap b,html[data-theme=light] .pcard b,html[data-theme=light] .pv-logo{color:#111}
+html[data-theme=light] .btn.ghost{border-color:#0005;color:#111}
+html[data-theme=light] .btn{color:#fff}
+/* keep video hero, contact band, lightbox and form dialog as dark/red islands */
+html[data-theme=light] .hero{color:#fff}html[data-theme=light] .hero .sub{color:#ddd}html[data-theme=light] .hero .btn.ghost{color:#fff;border-color:#fff6}
+html[data-theme=light] .contact{color:#fff}html[data-theme=light] .contact .exp{color:#fff}html[data-theme=light] .contact .btn.ghost{color:#fff;border-color:#fff}
+html[data-theme=light] .chrono{background:radial-gradient(ellipse at top,#f6ecd4 0%,#fff 60%);--c:#8f6a1c}
+html[data-theme=light] .chrono h2 em{color:#a87b1f}
+html[data-theme=light] .prod,html[data-theme=light] .awards,html[data-theme=light] .studio,html[data-theme=light] .press-s,html[data-theme=light] .plist,html[data-theme=light] .plist a,html[data-theme=light] .cat-sheet,html[data-theme=light] .cat-scope,html[data-theme=light] .cv-sec,html[data-theme=light] .srcs,html[data-theme=light] .ptab td{border-color:#e4e4e4}
+html[data-theme=light] .soon{border-color:#ddd}
+html[data-theme=light] .aw div,html[data-theme=light] .aw>a,html[data-theme=light] .cv-tiers>div,html[data-theme=light] .cv-eras>div{border-color:#e0e0e0;background:#fff}
+html[data-theme=light] .aw>a:hover{border-color:var(--red)}
+html[data-theme=light] .talks a,html[data-theme=light] .press-s .note a,html[data-theme=light] .cv-insp a{color:#111}
+html[data-theme=light] .pv{background:#eee}
+html[data-theme=light] .pcard{background:#fff;border-color:#e3e3e3}html[data-theme=light] .pcard:hover{border-color:var(--red)}
+html[data-theme=light] .ps{color:#555}
+html[data-theme=light] .tg{border-color:#d4d4d4;color:#333}
+html[data-theme=light] .el-links a{color:#111}html[data-theme=light] .el-links a:hover{color:#fff}
+html[data-theme=light] .cvcard{background:#fff;border-color:#e4e4e4;box-shadow:0 10px 30px #0000000d}
+html[data-theme=light] .cv-venue,html[data-theme=light] .cv-back,html[data-theme=light] .cat-ref,html[data-theme=light] .cat-common{color:#555}
+html[data-theme=light] .cv-back:hover{color:var(--red)}
+html[data-theme=light] .cv-insp,html[data-theme=light] .cv-note,html[data-theme=light] .cv-eras p,html[data-theme=light] .pr-card p,html[data-theme=light] .cat-prix-i p{color:#444}
+html[data-theme=light] .cv-fig figcaption,html[data-theme=light] .cv-small,html[data-theme=light] .cat-vis figcaption,html[data-theme=light] .cat-n{color:#666}
+html[data-theme=light] .tabbar{background:#fffffff0;border-bottom-color:#e6e6e6}
+html[data-theme=light] .tabbar a{color:#444;border-color:#ddd}html[data-theme=light] .tabbar a:hover{color:#111;border-color:#999}
+html[data-theme=light] .tabbar a.on{color:#fff;border-color:var(--red)}
+html[data-theme=light] .cat-part{background:#fafafa;border-color:#e4e4e4}
+html[data-theme=light] .cat-sm2 .g img{background:#f0f0f0}
+html[data-theme=light] .ptab tr.tot td{color:#111;border-bottom-color:#999}
+html[data-theme=light] .foot-links a{color:#333}html[data-theme=light] .foot-links a:hover{color:var(--red)}
+html[data-theme=light] footer{border-top:1px solid #eee}
+html[data-theme=light] .vid,html[data-theme=light] .yt{background:#e9e9e9}
+html[data-theme=light] .yt{color:#fff}
+html[data-theme=light] .mk-gate{background:#fffc}html[data-theme=light] .mk-gate.mk-hard{background:var(--bg)}
+html[data-theme=light] .mk-card{background:#fff;color:#111;border-color:#e2e2e2;border-top-color:var(--red);box-shadow:0 30px 80px #0002}
+html[data-theme=light] .mk-p{color:#444}html[data-theme=light] .mk-foot{color:#666}
+html[data-theme=light] .mk-row input{background:#f6f6f6;color:#111;border-color:#d6d6d6}
+html[data-theme=light] .mk-x{border-color:#ddd}
+html[data-theme=light] .mk-err{color:#c40000}
