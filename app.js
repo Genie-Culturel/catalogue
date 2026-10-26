@@ -127,11 +127,10 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
-// v18 « Restons en contact » modal: Sender embed (form b68PWn). After submit, Sender redirects the iframe to merci.html; that page shows Merci for 5s then closes this modal.
+// v18 « Restons en contact » modal: Sender embed (form b68PWn). Sender shows its own thank-you message after submit.
 (function(){
   var dlg=document.getElementById('nl');if(!dlg)return;
   var FORM_SRC='https://stats.sender.net/forms/b68PWn/view';
-  var MERCI_MS=5000;
   var opener=null,loaded=false,box=dlg.querySelector('.sender-form-field'),
       loading=dlg.querySelector('.nl-loading');
   function rendered(){return !!box.querySelector('input,select,textarea,iframe')}
@@ -148,23 +147,10 @@
     document.body.style.overflow='';
     resetForm();
   }
-  // Same-origin merci.html can call this directly; postMessage is the fallback.
-  window.gcCloseContactModal=function(){if(isOpen())close()};
-  function scheduleMerciClose(f){
-    clearTimeout(f._gcMerciT);
-    f._gcMerciT=setTimeout(function(){if(isOpen())close()},MERCI_MS);
-  }
-  function onFrameLoad(f){
-    if(loading)loading.hidden=true;
-    try{
-      var href=(f.contentWindow.location&&f.contentWindow.location.href)||'';
-      if(/merci\.html/i.test(href))scheduleMerciClose(f);
-    }catch(err){/* still cross-origin on stats.sender.net */}
-  }
   function bindFrame(f){
     if(f._gcBound)return;
     f._gcBound=1;
-    f.addEventListener('load',function(){watch();onFrameLoad(f)});
+    f.addEventListener('load',function(){watch();if(loading)loading.hidden=true});
   }
   new MutationObserver(function(){if(rendered()&&loading)loading.hidden=true;watch();
     [].forEach.call(box.querySelectorAll('iframe'),bindFrame)}).observe(box,{childList:true,subtree:true});
@@ -172,10 +158,6 @@
   function iframe(){if(rendered())return;
     var f=document.createElement('iframe');f.className='nl-iframe';f.src=FORM_SRC;
     f.title='Restons en contact — Génie Culturel';bindFrame(f);box.appendChild(f)}
-  window.addEventListener('message',function(e){
-    var d=e.data,t=d&&typeof d==='object'?d.type:d;
-    if(t==='gc-contact-close'&&isOpen())close();
-  });
   function load(){if(loaded)return;loaded=true;
     var tpl=document.getElementById('sender-loader');
     if(dlg.dataset.mode==='embed'&&tpl){document.body.appendChild(document.importNode(tpl.content,true));setTimeout(iframe,8000)}
