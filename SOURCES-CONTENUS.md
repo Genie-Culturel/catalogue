@@ -1,6 +1,8 @@
 # Organisation du catalogue et du portfolio — 26 octobre 2026
 
-Les deux onglets utilisent les trois mêmes rubriques : médiation muséale et touristique ; formation professionnelle, simulation et IA ; promotion des métiers. Les fiches existantes sont conservées. SchoolCrafter rejoint la formation ; Novasphère reste dans la médiation et la découverte de l’énergie.
+Les deux onglets utilisent les trois mêmes rubriques : médiation muséale et touristique ; formation professionnelle, simulation et IA ; éducation. Les fiches existantes sont conservées. SchoolCrafter rejoint l’éducation ; Novasphère–Électron devient le deuxième produit de formation professionnelle et simulation, aux côtés de SimIA Healthcare, selon le brief.
+
+La catégorie Éducation présente les immersions VR multijoueurs sur mesure, avec SchoolCrafter comme référence du catalogue et réalisation du portfolio, ainsi que l’apprentissage, la découverte et la promotion des métiers, les présentations par simulation pour les foires aux métiers et à l’orientation, et les formats directement accessibles aux publics cibles.
 
 ## Nouveaux projets
 
@@ -19,3 +21,7 @@ Les trois photos proviennent de cette publication et sont stockées dans `assets
 ## Vérifications
 
 Contrôle des ancres et des fichiers d’images, absence d’identifiants HTML dupliqués, navigation entre les onglets, aperçu sur ordinateur et mobile (390 px), français et anglais, chargement des trois photos du KIKK.
+
+## Catalogue et portfolio
+
+Le catalogue décrit les dispositifs, leurs usages et adaptations. Chaque fiche comporte une référence et un lien vers le projet concret du portfolio. Le portfolio conserve les contextes réels, les visuels et les statuts de développement.

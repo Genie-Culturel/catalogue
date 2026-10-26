@@ -530,3 +530,5 @@ html[data-theme=light] .mk-err{color:#c40000}
 @media(prefers-reduced-motion:reduce){.category-nav a{transition:none}.category-nav a:hover{transform:none}}
 .festival{scroll-margin-top:130px}
 @media(max-width:699px){.festival{scroll-margin-top:170px}}
+
+.catalogue-reference{font-size:14px;color:var(--mut);margin:16px 0 22px}.catalogue-reference a{display:inline-block;margin-top:8px;color:var(--fg);text-underline-offset:4px}.catalogue-reference a:hover{color:var(--red)}
