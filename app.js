@@ -127,7 +127,7 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
-// v18 « Restons en contact » modal: Sender embed (form azpMjr), Sender script loaded lazily on first open.
+// v18 « Restons en contact » modal: Sender embed (form b68PWn), Sender script loaded lazily on first open.
 (function(){
   var dlg=document.getElementById('nl');if(!dlg)return;
   var opener=null,loaded=false,box=dlg.querySelector('.sender-form-field'),body=dlg.querySelector('.nl-sender-body'),
@@ -143,7 +143,7 @@
     [].forEach.call(box.querySelectorAll('iframe'),function(f){if(!f._gcw){f._gcw=1;f.addEventListener('load',watch)}})}).observe(box,{childList:true,subtree:true});
   new MutationObserver(relabel).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
   function iframe(){if(rendered())return;
-    var f=document.createElement('iframe');f.className='nl-iframe';f.src='https://stats.sender.net/forms/azpMjr/view';
+    var f=document.createElement('iframe');f.className='nl-iframe';f.src='https://stats.sender.net/forms/b68PWn/view';
     f.title='Restons en contact — Génie Culturel';var n=0;f.addEventListener('load',function(){if(loading)loading.hidden=true;n++;if(n>1)done()});box.appendChild(f)}
   // After submit: the hosted form reloads its iframe (2nd load) or posts a message → close and return to the site after 4 s.
   var doneT=null;function done(){if(doneT||!dlg.hasAttribute('open'))return;doneT=setTimeout(function(){doneT=null;close()},4000)}
