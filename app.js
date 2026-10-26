@@ -163,3 +163,11 @@
   dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dlg.hasAttribute('open')&&!dlg.showModal)close()});
 })();
+
+// Keep category ribbons below the fixed header and wrapping main tabs.
+(function(){
+  var bar=document.querySelector('.tabbar');if(!bar)return;
+  function categoryOffset(){var top=parseFloat(getComputedStyle(bar).top)||60;document.documentElement.style.setProperty('--category-sticky-top',(top+bar.offsetHeight)+'px')}
+  categoryOffset();window.addEventListener('resize',categoryOffset);
+  if('ResizeObserver' in window)new ResizeObserver(categoryOffset).observe(bar);
+})();

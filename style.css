@@ -532,3 +532,28 @@ html[data-theme=light] .mk-err{color:#c40000}
 @media(max-width:699px){.festival{scroll-margin-top:170px}}
 
 .catalogue-reference{font-size:14px;color:var(--mut);margin:16px 0 22px}.catalogue-reference a{display:inline-block;margin-top:8px;color:var(--fg);text-underline-offset:4px}.catalogue-reference a:hover{color:var(--red)}
+
+/* Shared activity colors and explicit technology labels. */
+[data-activity="mediation"]{--activity-color:#f29a38;--activity-text:#a34800;--activity-on:#201205}
+[data-activity="formation"]{--activity-color:#df342b;--activity-text:#bf251e;--activity-on:#fff}
+[data-activity="education"]{--activity-color:#f1c52b;--activity-text:#886100;--activity-on:#211b04}
+html[data-theme=dark] [data-activity]{--activity-text:var(--activity-color)}
+.category-nav a[data-activity]{border-top:6px solid var(--activity-color)}
+.category-nav a[data-activity]:hover,.category-nav a[data-activity]:focus-visible{border-color:var(--activity-color)}
+.category-nav a[data-activity] .category-number,.category-nav a[data-activity]>span:last-child{color:var(--activity-text)}
+.category-heading[data-activity]{border-top-color:var(--activity-color)}
+.category-heading[data-activity]>.tag{color:var(--activity-text)}
+.activity-group{position:relative;min-width:0}
+.activity-group>.activity-ribbon{position:sticky;top:var(--category-sticky-top,130px);z-index:35;display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--activity-color);color:var(--activity-on);font-size:14px;font-weight:700;line-height:1.3;border-radius:4px;box-shadow:0 2px 0 #0001}
+.activity-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:currentColor}
+.category-projects.activity-group{padding-top:0}
+.category-projects.activity-group>.activity-ribbon{border-radius:0;padding-left:max(20px,calc((100vw - 1180px)/2))}
+html[data-theme] .activity-group .cat-sheet,html[data-theme] .activity-group .prod{border-left:4px solid var(--activity-color);padding-left:22px}
+.activity-group .cat-txt>.tag,.activity-group .prod-body>.tag{color:var(--activity-text)}
+.activity-group [id],.activity-group.category-projects .category-heading{scroll-margin-top:calc(var(--category-sticky-top,130px) + 56px)}
+.tech-badges{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:18px 0 24px;line-height:1.4}
+.tech-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-right:3px}
+.tech-badge{display:inline-flex;padding:6px 10px;border:1px solid var(--mut);border-radius:99px;font-size:12px;font-weight:600;color:var(--fg);background:var(--bg2)}
+.activity-group .tech-badge{border-color:var(--activity-color)}
+.hero .tech-label{color:#eee}.hero .tech-badge{background:#111d;color:#fff}
+@media(max-width:600px){.activity-group>.activity-ribbon{font-size:12px;padding:10px 12px}.activity-ribbon .activity-dot{display:none}html[data-theme] .activity-group .cat-sheet,html[data-theme] .activity-group .prod{padding-left:14px}.tech-badges{gap:6px}.tech-badge{font-size:11px;padding:6px 8px}}
