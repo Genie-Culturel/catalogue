@@ -28,6 +28,13 @@ Le catalogue décrit les dispositifs, leurs usages et adaptations. Chaque fiche 
 
 ## Repères visuels et technologies
 
-Médiation : orange ; formation professionnelle : rouge ; éducation : jaune doré. Le même code est employé dans les cartes et les sections du catalogue et du portfolio, avec des bandeaux de catégorie persistants. Les badges distinguent RA, VR, réalité mixte, IA et supports web/interactifs. Les options techniques EMS / ORTRAT sont issues du brief de conception Your Challenge et restent présentées comme envisagées dans le portfolio.
+Médiation : rouge intermédiaire ; formation professionnelle : rouge ; éducation : jaune doré. Le même code est employé dans les cartes et les sections du catalogue et du portfolio, avec des bandeaux de catégorie persistants. Les badges distinguent RA, VR, réalité mixte, IA et supports web/interactifs. Les options techniques EMS / ORTRAT sont issues du brief de conception Your Challenge et restent présentées comme envisagées dans le portfolio.
 
 Vérification : ancres, trois groupes par onglet, JavaScript, rendu ordinateur/mobile à 390 px, absence de débordement horizontal et navigation entre les onglets.
+
+## Film du studio
+
+Source : `/GENIE CULTUREL/MARKETING-COMMUNICATION/Branding/Studio GC 720p .mp4` dans Dropbox. Film de présentation du studio et de son équipe (1 min 42), identifié visuellement. Une version MP4 optimisée de 20,9 Mo est utilisée sur le site, avec couverture extraite de la vidéo, commandes de lecture, son disponible et sans lecture automatique. L’original reste conservé dans Dropbox.
+
+- Équipe studio : photo du site officiel https://www.genieculturel.ch/a-propos-de-genie-culturel/ (PXL_20260213_110828144.RAW-01.jpg).
+- HE-Arc diffusion Instagram/TikTok : Dropbox HES SOINS INFIRMIERS/Diffusion - comm/Insta_selfie.png.
