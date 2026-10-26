@@ -534,9 +534,9 @@ html[data-theme=light] .mk-err{color:#c40000}
 .catalogue-reference{font-size:14px;color:var(--mut);margin:16px 0 22px}.catalogue-reference a{display:inline-block;margin-top:8px;color:var(--fg);text-underline-offset:4px}.catalogue-reference a:hover{color:var(--red)}
 
 /* Shared activity colors and explicit technology labels. */
-[data-activity="mediation"]{--activity-color:#ed1c18;--activity-text:#c1221b;--activity-on:#fff}
-[data-activity="formation"]{--activity-color:#df342b;--activity-text:#bf251e;--activity-on:#fff}
-[data-activity="education"]{--activity-color:#f1c52b;--activity-text:#886100;--activity-on:#211b04}
+[data-activity="mediation"]{--activity-color:#D62828;--activity-text:#a61e1e;--activity-on:#fff}
+[data-activity="formation"]{--activity-color:#F77F00;--activity-text:#b35a00;--activity-on:#fff}
+[data-activity="education"]{--activity-color:#F1C52B;--activity-text:#886100;--activity-on:#211b04}
 html[data-theme=dark] [data-activity]{--activity-text:var(--activity-color)}
 .category-nav a[data-activity]{border-top:6px solid var(--activity-color)}
 .category-nav a[data-activity]:hover,.category-nav a[data-activity]:focus-visible{border-color:var(--activity-color)}
