@@ -127,9 +127,10 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
-// v18 « Restons en contact » modal: Sender embed (form b68PWn), Sender script loaded lazily on first open.
+// v18 « Restons en contact » modal: Sender embed (form b68PWn). After submit, Sender redirects the iframe to merci.html; that page shows Merci for 5s then posts gc-contact-close to close this modal (quit the form).
 (function(){
   var dlg=document.getElementById('nl');if(!dlg)return;
+  var FORM_SRC='https://stats.sender.net/forms/b68PWn/view';
   var opener=null,loaded=false,box=dlg.querySelector('.sender-form-field'),body=dlg.querySelector('.nl-sender-body'),
       loading=dlg.querySelector('.nl-loading');
   function rendered(){return !!box.querySelector('input,select,textarea,iframe')}
@@ -143,19 +144,22 @@
     [].forEach.call(box.querySelectorAll('iframe'),function(f){if(!f._gcw){f._gcw=1;f.addEventListener('load',watch)}})}).observe(box,{childList:true,subtree:true});
   new MutationObserver(relabel).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
   function iframe(){if(rendered())return;
-    var f=document.createElement('iframe');f.className='nl-iframe';f.src='https://stats.sender.net/forms/b68PWn/view';
-    f.title='Restons en contact — Génie Culturel';var n=0;f.addEventListener('load',function(){if(loading)loading.hidden=true;n++;if(n>1)done()});box.appendChild(f)}
-  // After submit: the hosted form reloads its iframe (2nd load) or posts a message → close and return to the site after 4 s.
-  var doneT=null;function done(){if(doneT||!dlg.hasAttribute('open'))return;doneT=setTimeout(function(){doneT=null;close()},4000)}
-  window.addEventListener('message',function(e){if(/sender\.net$/.test((e.origin||'').replace(/^https?:\/\//,''))&&/success|submit|subscrib/i.test(typeof e.data==='string'?e.data:JSON.stringify(e.data||'')))done()});
+    var f=document.createElement('iframe');f.className='nl-iframe';f.src=FORM_SRC;
+    f.title='Restons en contact — Génie Culturel';f.addEventListener('load',function(){if(loading)loading.hidden=true});box.appendChild(f)}
+  function resetForm(){var f=box&&box.querySelector('iframe.nl-iframe');if(f){f.src=FORM_SRC}else{loaded=false;if(box)box.innerHTML='';if(loading)loading.hidden=false}}
+  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}document.body.style.overflow='';resetForm()}
+  // merci.html (same-origin thank-you after Sender redirect) asks the parent to quit the form after 5 s.
+  window.addEventListener('message',function(e){
+    var d=e.data,t=d&&typeof d==='object'?d.type:d;
+    if(t==='gc-contact-close'&&dlg.hasAttribute('open'))close();
+  });
   function load(){if(loaded)return;loaded=true;
     var tpl=document.getElementById('sender-loader');
     if(dlg.dataset.mode==='embed'&&tpl){document.body.appendChild(document.importNode(tpl.content,true));setTimeout(iframe,8000)}
     else{iframe()}}
-  function open(b){opener=b||null;load();
+  function open(b){opener=b||null;if(!box.querySelector('iframe.nl-iframe')){loaded=false}load();
     if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}document.body.style.overflow='hidden';
     setTimeout(function(){dlg.querySelector('.nl-x').focus()},30)}
-  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}document.body.style.overflow=''}
   dlg.addEventListener('close',function(){document.body.style.overflow='';if(opener)opener.focus()});
   [].forEach.call(document.querySelectorAll('.nl-open'),function(b){b.addEventListener('click',function(){open(b)})});
   dlg.querySelector('.nl-x').addEventListener('click',close);
