@@ -19,22 +19,25 @@ p{margin:0;color:#a9a9a9;font-size:1.05rem;line-height:1.5}
 </head>
 <body>
   <div class="box" role="status" aria-live="polite">
-    <h1><span lang="fr">Merci !</span><span lang="en" hidden>Thank you!</span></h1>
-    <p lang="fr">Nous avons bien reçu votre demande.<br>Nous revenons vers vous très vite.</p>
-    <p lang="en" hidden>We have received your message.<br>We will get back to you very soon.</p>
+    <h1>Merci !</h1>
+    <p>Nous avons bien reçu votre inscription.</p>
   </div>
 <script>
 (function(){
-  var embedded = window.parent && window.parent !== window;
-  var CLOSE_MS = 5000;
-  function notifyClose(){
+  var CLOSE_MS=5000;
+  function askClose(){
     try{
-      if(embedded){
-        window.parent.postMessage({type:'gc-contact-close'}, '*');
+      var p=window.parent;
+      if(p&&p!==window){
+        if(typeof p.gcCloseContactModal==='function'){p.gcCloseContactModal();return}
+        p.postMessage({type:'gc-contact-close'},'*');
+        try{if(window.top&&window.top!==p)window.top.postMessage({type:'gc-contact-close'},'*')}catch(e2){}
+        return;
       }
     }catch(e){}
+    try{location.replace('index.html')}catch(e3){}
   }
-  setTimeout(notifyClose, CLOSE_MS);
+  setTimeout(askClose,CLOSE_MS);
 })();
 </script>
 </body>

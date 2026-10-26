@@ -127,31 +127,54 @@
   window.addEventListener('hashchange',function(){route(false)});
   route(true);
 })();
-// v18 « Restons en contact » modal: Sender embed (form b68PWn). After submit, Sender redirects the iframe to merci.html; that page shows Merci for 5s then posts gc-contact-close to close this modal (quit the form).
+// v18 « Restons en contact » modal: Sender embed (form b68PWn). After submit, Sender redirects the iframe to merci.html; that page shows Merci for 5s then closes this modal.
 (function(){
   var dlg=document.getElementById('nl');if(!dlg)return;
   var FORM_SRC='https://stats.sender.net/forms/b68PWn/view';
-  var opener=null,loaded=false,box=dlg.querySelector('.sender-form-field'),body=dlg.querySelector('.nl-sender-body'),
+  var MERCI_MS=5000;
+  var opener=null,loaded=false,box=dlg.querySelector('.sender-form-field'),
       loading=dlg.querySelector('.nl-loading');
   function rendered(){return !!box.querySelector('input,select,textarea,iframe')}
+  function isOpen(){return !!(dlg.open||dlg.hasAttribute('open'))}
   // Relabel Sender's "Select item" placeholder (embed mode: the form renders in a same-origin iframe; cross-origin iframe mode: skipped)
   function roots(){var r=[box];[].forEach.call(box.querySelectorAll('iframe'),function(f){try{if(f.contentDocument&&f.contentDocument.body)r.push(f.contentDocument.body)}catch(e){}});return r}
   function relabel(){var lab=document.documentElement.dataset.lang==='en'?'Choose a topic':'Choisir un sujet';
     roots().forEach(function(root){[].forEach.call(root.querySelectorAll('option'),function(o){if(/^\s*select item\s*$/i.test(o.textContent)||o.dataset.gcPh){o.dataset.gcPh=1;if(o.textContent!==lab)o.textContent=lab}})})}
   var watched=[];
   function watch(){roots().forEach(function(root){if(watched.indexOf(root)<0){watched.push(root);new MutationObserver(relabel).observe(root,{childList:true,subtree:true})}});relabel()}
+  function resetForm(){var f=box&&box.querySelector('iframe.nl-iframe');if(f){f.src=FORM_SRC}else{loaded=false;if(box)box.innerHTML='';if(loading)loading.hidden=false}}
+  function close(){
+    try{if(typeof dlg.close==='function')dlg.close();else dlg.removeAttribute('open')}catch(e){dlg.removeAttribute('open')}
+    document.body.style.overflow='';
+    resetForm();
+  }
+  // Same-origin merci.html can call this directly; postMessage is the fallback.
+  window.gcCloseContactModal=function(){if(isOpen())close()};
+  function scheduleMerciClose(f){
+    clearTimeout(f._gcMerciT);
+    f._gcMerciT=setTimeout(function(){if(isOpen())close()},MERCI_MS);
+  }
+  function onFrameLoad(f){
+    if(loading)loading.hidden=true;
+    try{
+      var href=(f.contentWindow.location&&f.contentWindow.location.href)||'';
+      if(/merci\.html/i.test(href))scheduleMerciClose(f);
+    }catch(err){/* still cross-origin on stats.sender.net */}
+  }
+  function bindFrame(f){
+    if(f._gcBound)return;
+    f._gcBound=1;
+    f.addEventListener('load',function(){watch();onFrameLoad(f)});
+  }
   new MutationObserver(function(){if(rendered()&&loading)loading.hidden=true;watch();
-    [].forEach.call(box.querySelectorAll('iframe'),function(f){if(!f._gcw){f._gcw=1;f.addEventListener('load',watch)}})}).observe(box,{childList:true,subtree:true});
+    [].forEach.call(box.querySelectorAll('iframe'),bindFrame)}).observe(box,{childList:true,subtree:true});
   new MutationObserver(relabel).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
   function iframe(){if(rendered())return;
     var f=document.createElement('iframe');f.className='nl-iframe';f.src=FORM_SRC;
-    f.title='Restons en contact — Génie Culturel';f.addEventListener('load',function(){if(loading)loading.hidden=true});box.appendChild(f)}
-  function resetForm(){var f=box&&box.querySelector('iframe.nl-iframe');if(f){f.src=FORM_SRC}else{loaded=false;if(box)box.innerHTML='';if(loading)loading.hidden=false}}
-  function close(){if(dlg.close){dlg.close()}else{dlg.removeAttribute('open')}document.body.style.overflow='';resetForm()}
-  // merci.html (same-origin thank-you after Sender redirect) asks the parent to quit the form after 5 s.
+    f.title='Restons en contact — Génie Culturel';bindFrame(f);box.appendChild(f)}
   window.addEventListener('message',function(e){
     var d=e.data,t=d&&typeof d==='object'?d.type:d;
-    if(t==='gc-contact-close'&&dlg.hasAttribute('open'))close();
+    if(t==='gc-contact-close'&&isOpen())close();
   });
   function load(){if(loaded)return;loaded=true;
     var tpl=document.getElementById('sender-loader');
@@ -159,13 +182,13 @@
     else{iframe()}}
   function open(b){opener=b||null;if(!box.querySelector('iframe.nl-iframe')){loaded=false}load();
     if(dlg.showModal){dlg.showModal()}else{dlg.setAttribute('open','')}document.body.style.overflow='hidden';
-    setTimeout(function(){dlg.querySelector('.nl-x').focus()},30)}
+    setTimeout(function(){var x=dlg.querySelector('.nl-x');if(x)x.focus()},30)}
   dlg.addEventListener('close',function(){document.body.style.overflow='';if(opener)opener.focus()});
   [].forEach.call(document.querySelectorAll('.nl-open'),function(b){b.addEventListener('click',function(){open(b)})});
-  dlg.querySelector('.nl-x').addEventListener('click',close);
+  var xbtn=dlg.querySelector('.nl-x');if(xbtn)xbtn.addEventListener('click',close);
   var bk=dlg.querySelector('.nl-back');if(bk)bk.addEventListener('click',close);
   dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dlg.hasAttribute('open')&&!dlg.showModal)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen()&&!dlg.showModal)close()});
 })();
 
 // Keep category ribbons below the fixed header and wrapping main tabs.
