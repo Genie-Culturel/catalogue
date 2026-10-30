@@ -561,3 +561,13 @@ html[data-theme] .activity-group .cat-sheet,html[data-theme] .activity-group .pr
 .studio-film{margin:32px 0 36px}.studio-film video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000;border-radius:10px}.studio-film figcaption{color:var(--mut);font-size:13px;line-height:1.5;margin-top:12px}
 
 .studio-team{margin:30px 0}.studio-team img{display:block;width:100%;height:auto;border-radius:10px}.studio-team figcaption,.hearc-social figcaption{font-size:13px;color:var(--mut);margin-top:12px;line-height:1.5}.hearc-social{grid-column:1/-1;width:min(100%,420px);margin:28px auto 0}.hearc-social img{display:block;width:100%;height:auto;border-radius:8px}
+
+/* v56 per-concept password prompt (Mockup cards) */
+.cv-gate .mk-card{width:min(480px,100%);max-height:calc(100vh - 40px);overflow:auto}
+.cv-name{font-size:clamp(22px,4.4vw,28px)!important;line-height:1.15}
+.cv-ck{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#bbb;background:#ffffff0a;border:1px solid #2a2a2a;border-radius:12px;padding:12px 14px;margin:0 0 14px;cursor:pointer}
+.cv-ck input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:var(--red);cursor:pointer}
+.cv-ck.cv-need{border-color:var(--red)}
+.cv-go.is-off{opacity:.45;cursor:not-allowed}.cv-go.is-off:hover{transform:none;box-shadow:none}
+html[data-theme=light] .cv-ck{color:#333;background:#f6f6f4;border-color:#e2e2e2}
+html[data-theme=light] .cv-ck.cv-need{border-color:var(--red)}

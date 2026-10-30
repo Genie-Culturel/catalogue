@@ -45,6 +45,58 @@
   // old home links (#chez-vous / #cv-list) now lead to the locked Mockup page
   if(home&&/^#(chez-vous|cv-list)$/.test(location.hash)){if(ok())location.replace(idx);else{history.replaceState(null,'',location.pathname+location.search);open(idx,false)}}
 })();
+// v56 per-concept access (Mockup cards): each « Découvrir le concept » asks its own password (SHA-256 only) + mandatory confidentiality checkbox; unlock kept in sessionStorage 'gc-cv-<slug>'
+(function(){
+  var links=document.querySelectorAll('a[data-cv]');if(!links.length)return;
+  var H=document.documentElement,K={
+    'europe-memoires-vivantes':'2416cf75830de98f6f3112e910960adb9ba2976fd69aa13825a31e20fe2af376',
+    'chronoscope-xr':'4b2fec575fa262b89766e8d0267320569ef383e6e3f3d251d711f022a0031be4',
+    'opera-liege':'3586c42d6b76677710e8c73c6088b9cc09f3495fc4b491da7e63079504267f65',
+    'espace-gutenberg':'a988c7936031c1fec85904ec8bfb11dfd3199b3a68d34458afe811a87944156b'};
+  function hex(b){return [].map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2)}).join('')}
+  function sha(s){if(window.crypto&&crypto.subtle&&window.TextEncoder)return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(hex);return Promise.reject()}
+  function T(fr,en){return '<span lang="fr">'+fr+'</span><span lang="en">'+en+'</span>'}
+  function ok(k){try{return sessionStorage.getItem('gc-cv-'+k)==='1'}catch(e){return false}}
+  var box=null,slug=null,href=null;
+  function build(){
+    box=document.createElement('div');box.className='mk-gate cv-gate';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','cv-t');
+    var lock=document.querySelector('.mk-link .ic-lock');
+    box.innerHTML='<form class="mk-card" novalidate><button type="button" class="mk-x" aria-label="Fermer / Close">×</button>'+
+      '<p class="mk-ic">'+(lock?lock.outerHTML:'')+'</p>'+
+      '<p class="mk-k">'+T('Concept protégé','Protected concept')+'</p><h2 id="cv-t" class="cv-name"></h2>'+
+      '<p class="mk-p">'+T('Entrez le mot de passe de ce concept pour y accéder.','Enter this concept’s password to access it.')+'</p>'+
+      '<label class="cv-ck"><input type="checkbox" id="cv-ok" required><span>'+T(
+        'Je reconnais que les contenus accessibles via ce lien sont des propositions confidentielles, propriété de Génie Culturel, protégées par le droit d’auteur. Toute reproduction, diffusion, adaptation ou exploitation, totale ou partielle, sans accord écrit préalable est interdite.',
+        'I acknowledge that the content accessible via this link consists of confidential proposals, the property of Génie Culturel, protected by copyright. Any reproduction, distribution, adaptation or use, in whole or in part, without prior written consent is prohibited.')+'</span></label>'+
+      '<label class="mk-sr" for="cv-in">'+T('Mot de passe','Password')+'</label><div class="mk-row"><input id="cv-in" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="••••••">'+
+      '<button type="submit" class="btn mk-go cv-go is-off" aria-disabled="true">'+T('Valider','Confirm')+'</button></div>'+
+      '<p class="mk-err cv-err-ck" role="alert" hidden>'+T('Veuillez cocher la case ci-dessus pour continuer.','Please tick the box above to continue.')+'</p>'+
+      '<p class="mk-err cv-err-pw" role="alert" hidden>'+T('Mot de passe incorrect pour ce concept.','Incorrect password for this concept.')+'</p>'+
+      '<p class="mk-foot">'+T('Pas de mot de passe ? ','No password? ')+'<a href="mailto:info@genieculturel.ch">info@genieculturel.ch</a></p></form>';
+    document.body.appendChild(box);
+    var f=box.querySelector('form'),inp=box.querySelector('#cv-in'),ck=box.querySelector('#cv-ok'),go=box.querySelector('.cv-go'),e1=box.querySelector('.cv-err-ck'),e2=box.querySelector('.cv-err-pw');
+    function sync(){go.classList.toggle('is-off',!ck.checked);go.setAttribute('aria-disabled',ck.checked?'false':'true');if(ck.checked)e1.hidden=true}
+    ck.addEventListener('change',sync);
+    function shake(){f.classList.remove('mk-shake');void f.offsetWidth;f.classList.add('mk-shake')}
+    f.addEventListener('submit',function(e){e.preventDefault();e2.hidden=true;
+      if(!ck.checked){e1.hidden=false;box.querySelector('.cv-ck').classList.add('cv-need');shake();return}
+      var v=(inp.value||'').trim().toLowerCase();if(!v){inp.focus();return}
+      var want=K[slug];
+      sha(v).then(function(h){if(h===want){try{sessionStorage.setItem('gc-cv-'+slug,'1')}catch(x){}location.href=href}
+        else{e2.hidden=false;shake();inp.select()}},function(){e2.hidden=false})});
+    box.querySelector('.mk-x').addEventListener('click',close);
+    box.addEventListener('click',function(e){if(e.target===box)close()});
+    box._reset=function(){inp.value='';ck.checked=false;e1.hidden=true;e2.hidden=true;box.querySelector('.cv-ck').classList.remove('cv-need');sync()};
+  }
+  function open(a){slug=a.getAttribute('data-cv');href=a.href;if(!box)build();box._reset();
+    var card=a.closest('.cvcard'),h=card&&card.querySelector('h3');box.querySelector('.cv-name').innerHTML=h?h.innerHTML:'';
+    box.hidden=false;document.body.style.overflow='hidden';setTimeout(function(){box.querySelector('#cv-in').focus()},30)}
+  function close(){if(box){box.hidden=true;document.body.style.overflow=''}}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&box&&!box.hidden)close()});
+  [].forEach.call(links,function(a){a.addEventListener('click',function(e){var k=a.getAttribute('data-cv');if(ok(k))return;e.preventDefault();open(a)})});
+  // arriving from a guarded concept page (?cv=<slug>): reopen that card's prompt
+  try{var q=new URLSearchParams(location.search).get('cv');if(q&&K[q]&&!ok(q)&&!H.classList.contains('mk-locked')){var a=document.querySelector('a.btn[data-cv="'+q+'"]');if(a)setTimeout(function(){open(a)},60)}}catch(e){}
+})();
 (function(){
   var H=document.documentElement;
   var q=new URLSearchParams(location.search).get('lang');
